@@ -1,0 +1,12 @@
+{
+  "name" : "justalexi-youtrack-workflow-repeat-issue",
+  "title" : "Repeat Issue",
+  "description" : null,
+  "dependencies" : {
+    "@jetbrains/youtrack-scripting-api" : "^2020.3.7955"
+  },
+  "youtrack" : {
+    "autoAttached" : false,
+    "readOnly" : false
+  }
+}
