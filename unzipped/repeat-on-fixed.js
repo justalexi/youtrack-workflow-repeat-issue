@@ -80,6 +80,12 @@ exports.rule = entities.Issue.onChange({
           if (typeof skipSuffix === 'undefined' || skipSuffix == skipIncrements[j]) {
             workflow.message(workflow.i18n('Issue recreated: <a href="{0}">{1}</a>\nat {2}', newIssue.url, newIssue.id, dateTime.format(nextDate)));
             newIssue.fields['Start date and time'] = nextDateMS;
+            
+            if (issue.fields.FinishDateAndTime) {
+              var nextFinishDateMS = issue.fields.FinishDateAndTime + i * DAY_IN_MS;
+              newIssue.fields['Finish date and time'] = nextFinishDateMS;
+            }
+            
             return;
           }
         }
@@ -90,6 +96,10 @@ exports.rule = entities.Issue.onChange({
     StartDateAndTime: {
       type: entities.Field.dateTimeType,
       name: 'Start date and time'
+    },
+    FinishDateAndTime: {
+      type: entities.Field.dateTimeType,
+      name: 'Finish date and time'
     },
     Repeat: {
       type: entities.Field.stringType
