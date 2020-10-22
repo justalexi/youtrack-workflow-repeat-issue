@@ -8,7 +8,9 @@ exports.rule = entities.Issue.onChange({
   title: workflow.i18n('Clone this issue to the next Repeat Date when its State changed to Fixed or Obsolete'),
   guard: function(ctx) {
     var issue = ctx.issue;
-    return issue.fields.Repeat && (issue.fields.becomes(ctx.State, ctx.State.Fixed) || issue.fields.becomes(ctx.State, ctx.State.Obsolete));
+    return issue.fields.Repeat && (issue.fields.becomes(ctx.State, ctx.State.Fixed) ||
+                                   issue.fields.becomes(ctx.State, ctx.State.WontFix) ||
+                                   issue.fields.becomes(ctx.State, ctx.State.Obsolete));
   },
   action: function(ctx) {
     var issue = ctx.issue;
@@ -108,6 +110,9 @@ exports.rule = entities.Issue.onChange({
       type: entities.State.fieldType,
       Open: {},
       Fixed: {},
+      WontFix: {
+        name: 'Won\'t fix'
+      },
       Obsolete: {}
     }
   }
