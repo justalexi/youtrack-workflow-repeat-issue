@@ -23,12 +23,15 @@ exports.rule = entities.Issue.onChange({
     newIssue.addComment(workflow.i18n('Copied from {0}', issue.id));
     issue.addComment(workflow.i18n('Copied to {0}', newIssue.id));
 
+    // Clear checkboxes
+    var re = /- \[x\]/gi;
+    newIssue.description = newIssue.description.replace(re, '- [ ]');
+
     if (!issue.fields.StartDateAndTime) {
       // Just clone the issue without setting date for it
       workflow.message(workflow.i18n('StartDateAndTime is empty. Just clone.'));
       return;
     }
-
 
     // Rules for 'Repeat' field: 
     // 1. Weekly: MO, TU, WE, TH, FR, SA, SU - find next day of week from current date
