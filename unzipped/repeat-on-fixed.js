@@ -24,8 +24,10 @@ exports.rule = entities.Issue.onChange({
     issue.addComment(workflow.i18n('Copied to {0}', newIssue.id));
 
     // Clear checkboxes
-    var re = /- \[x\]/gi;
-    newIssue.description = newIssue.description.replace(re, '- [ ]');
+    if (newIssue.description) {
+      var re = /- \[x\]/gi;
+      newIssue.description = newIssue.description.replace(re, '- [ ]');
+    }
 
     if (!issue.fields.StartDateAndTime) {
       // Just clone the issue without setting date for it
